@@ -82,7 +82,6 @@ class _SkyState extends State<Sky> with TickerProviderStateMixin {
           DirectionIntentRight: DirectionAction(context, Direction.right),
         },
         child: Focus(
-          autofocus: true,
           child: GestureDetector(
             onVerticalDragUpdate: (details) {
               final directionZeref = ZerefProvider.of<DirectionZeref>(context);

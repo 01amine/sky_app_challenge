@@ -44,7 +44,7 @@ class SpacePainter extends CustomPainter {
     _drawStars(canvas, size);
 
     // Draw a celestial sphere or another animated element
-    _drawCelestialSphere(canvas, size);
+   // _drawCelestialSphere(canvas, size);
   }
 
   void _drawStars(Canvas canvas, Size size) {
