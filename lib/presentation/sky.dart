@@ -7,7 +7,6 @@ import 'package:sky_app/presentation/widgets/space_background.dart';
 import 'dart:math' as math;
 
 import 'package:sky_app/zerefs/direction_zeref.dart';
-import 'package:sky_app/zerefs/navigation_zeref.dart';
 import 'package:sky_app/zerefs/zeref_builder.dart';
 import 'package:sky_app/zerefs/zeref_provider.dart';
 
@@ -85,24 +84,31 @@ class _SkyState extends State<Sky> with TickerProviderStateMixin {
         child: Focus(
           autofocus: true,
           child: GestureDetector(
-            onVerticalDragDown: (details) {
-              final navigationZeref =
-                  ZerefProvider.of<NavigationZeref>(context);
-              navigationZeref.navigateTo(context, '/sky');
-            },
-            onHorizontalDragDown: (details) {
+            onVerticalDragUpdate: (details) {
               final directionZeref = ZerefProvider.of<DirectionZeref>(context);
-              if (details.globalPosition.dx <
-                  MediaQuery.of(context).size.width / 2) {
-                directionZeref.changeDirection(Direction.left);
+              if (details.primaryDelta! > 0) {
+                // Dragging down
+                directionZeref.changeDirection(Direction.down);
               } else {
+                // Dragging up
+                directionZeref.changeDirection(Direction.up);
+              }
+            },
+            onHorizontalDragUpdate: (details) {
+              final directionZeref = ZerefProvider.of<DirectionZeref>(context);
+              if (details.primaryDelta! > 0) {
+                // Dragging right
                 directionZeref.changeDirection(Direction.right);
+              } else {
+                // Dragging left
+                directionZeref.changeDirection(Direction.left);
               }
             },
             child: Scaffold(
               backgroundColor: const Color(0xff00000f),
               body: ZerefBuilder<DirectionZeref>(
                 builder: (context, state) {
+                  print(state.value);
                   return Stack(
                     children: [
                       const SpaceBackGround(),

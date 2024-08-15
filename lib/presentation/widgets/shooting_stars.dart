@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:sky_app/zerefs/direction_zeref.dart';
+import 'package:sky_app/zerefs/zeref_builder.dart';
+
 class ShootingStar extends StatefulWidget {
   const ShootingStar({super.key});
 
@@ -29,14 +32,19 @@ class _ShootingStarState extends State<ShootingStar>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context)
-          .size
-          .height, // Adjust the height to cover the screen
-      width: 100,
-      child: CustomPaint(
-        painter: ShootingStarPaint(animation: _animation),
-      ),
+    return ZerefBuilder<DirectionZeref>(
+      builder: (context, directionZeref) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: 100,
+          child: CustomPaint(
+            painter: ShootingStarPaint(
+              direction: directionZeref.value,
+              animation: _animation,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -52,8 +60,10 @@ class _ShootingStarState extends State<ShootingStar>
 
 class ShootingStarPaint extends CustomPainter {
   final Animation<double> animation;
+  final Direction direction;
 
-  ShootingStarPaint({required this.animation}) : super(repaint: animation);
+  ShootingStarPaint({required this.direction, required this.animation})
+      : super(repaint: animation);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -91,9 +101,26 @@ class ShootingStarPaint extends CustomPainter {
 
     final double tailLength = 50.0 * animation.value;
 
-    // Move the tail with the star
-    final double endX = startX - tailLength * math.cos(math.pi / 4);
-    final double endY = startY - tailLength * math.sin(math.pi / 4);
+    // Adjust tail direction based on the shooting direction
+    double endX, endY;
+    switch (direction) {
+      case Direction.left:
+        endX = startX - tailLength;
+        endY = startY;
+        break;
+      case Direction.right:
+        endX = startX + tailLength;
+        endY = startY;
+        break;
+      case Direction.up:
+        endX = startX;
+        endY = startY - tailLength;
+        break;
+      case Direction.down:
+        endX = startX;
+        endY = startY + tailLength;
+        break;
+    }
 
     final Offset tailStart = Offset(startX, startY);
     final Offset tailEnd = Offset(endX, endY);
