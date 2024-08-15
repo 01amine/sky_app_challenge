@@ -4,7 +4,7 @@ import 'package:sky_app/zerefs/zeref_base.dart';
 class ZerefProvider<T extends ZerefBase> extends StatefulWidget {
   final T value;
   final Widget? child;
-  const ZerefProvider({Key? key, required this.value, this.child}) : super(key: key);
+  const ZerefProvider({super.key, required this.value, this.child});
 
   @override
   State<StatefulWidget> createState() => _ZerefProviderState<T>();

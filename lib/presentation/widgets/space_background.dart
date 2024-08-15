@@ -53,7 +53,7 @@ class SpacePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 1.0;
 
-    final starCount = 100;
+    const starCount = 100;
     final random = math.Random();
 
     for (int i = 0; i < starCount; i++) {

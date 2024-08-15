@@ -8,8 +8,7 @@ import 'package:sky_app/zerefs/zeref_provider.dart';
 class ZerefListener<T extends Zeref> extends StatelessWidget {
   final void Function(BuildContext context, T value) listener;
   final Widget child;
-  const ZerefListener({Key? key, required this.listener, required this.child})
-      : super(key: key);
+  const ZerefListener({super.key, required this.listener, required this.child});
   @override
   Widget build(BuildContext context) {
     T value = ZerefProvider.of<T>(context);

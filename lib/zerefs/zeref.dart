@@ -4,7 +4,7 @@ import 'package:sky_app/zerefs/zeref_base.dart';
 
 class Zeref<T> implements ZerefBase<T> {
   T value;
-  Zeref(this.value) {}
+  Zeref(this.value);
   final StreamController<T> controller = StreamController<T>();
   StreamSink<T> get valueSink => controller.sink;
   Stream<T> get valueStream => controller.stream;
